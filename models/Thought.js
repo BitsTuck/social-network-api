@@ -1,15 +1,4 @@
-const { ObjectId } = require('bson');
-const mongoose = require('mongoose');
-
-const thoughtSchema = new mongoose.Schema ({
-    thoughtText: {
-        type: String,
-        // createdAt: date(get timestamp data),
-        // username: references user,
-        //reactions: reactionSchema only
-    }
-})
-
+const { Schema, model }= require('mongoose');
 
 const reactionSchema = new mongoose.Schema ({
     reactionId: {
@@ -30,3 +19,20 @@ const reactionSchema = new mongoose.Schema ({
     }
 
 })
+
+const thoughtSchema = new mongoose.Schema ({
+    thoughtText: {
+        type: String,
+        // createdAt: date(get timestamp data),
+        // username: references user,
+        reactions: [reactionSchema]
+    }
+})
+
+const Thought = mongoose.model('Thought', thoughtSchema);
+
+const handleError = (err) => console.error(err);
+
+module.exports = Thought;
+
+

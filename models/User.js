@@ -20,3 +20,17 @@ const userSchema = new mongoose.Schema({
     }
 
 })
+
+const User = mongoose.model('User', userSchema);
+
+const handleError = (err) => console.error(err);
+
+User
+.create({
+
+})
+
+.then(result => console.log('Created new User', result))
+.catch(err => handleError(err))
+
+module.exports = User;
