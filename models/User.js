@@ -13,14 +13,23 @@ const userSchema = new mongoose.Schema({
         matchMedia: true,
     }, 
     thoughts: {
-        //array, references Thought model
+        type: Schema.Types.ObjectId,
+        ref: ['Thought']
     },
     friends: {
-        //self-reference other users
+        type: Schema.Types.ObjectId,
+        ref: ['User']
+
     }
 
 })
 
+userSchema
+    .virtual('friendCount')
+    .get(function() {
+        return this.friends;
+    })
+    
 const User = mongoose.model('User', userSchema);
 
 const handleError = (err) => console.error(err);

@@ -8,14 +8,15 @@ const reactionSchema = new Schema ({
     reactionBody: {
         type: String,
         required: true, 
-        length: 280,
+        maxlength: 280,
     },
     username: {
         type: String, 
         required: true
     },
     createdAt: {
-        //date, current timestamp, get timestamp data)
+        type: Date,
+        default: Date.now,
     }
 
 })
@@ -23,9 +24,20 @@ const reactionSchema = new Schema ({
 const thoughtSchema = new Schema ({
     thoughtText: {
         type: String,
-        // createdAt: date(get timestamp data),
-        // username: references user,
-        reactions: [reactionSchema]
+        required: true,
+        minlength: 1,
+        maxlength: 280,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    reactions: {
+        ref: [reactionSchema]
     }
 })
 
