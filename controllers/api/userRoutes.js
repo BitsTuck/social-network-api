@@ -1,7 +1,8 @@
+const router = require('express').Router()
 const {User} = require('../../models')
 
-module.exports = {
-    async getUsers(req, res) {
+// /api/users
+   router.get('/', async (req, res) => {
         try {
             const users = await User.find();
 
@@ -17,9 +18,9 @@ module.exports = {
             console.log(err)
             return res.status(500).json(err);
         }
-        },
+        }),
 
-    async getSingleUser(req, res) {
+    router.get('/:id', async (req, res) => {
         try {
             const user = await User.findOne({ _id: req.params.username})
 
@@ -36,18 +37,18 @@ module.exports = {
             console.log(err);
             return res.status(500).json(err);
         }
-    },
+    }),
 
-    async createUser(req, res) {
+    router.post ('/', async (req, res) => {
         try {
             const newUser = await User.create(req.body);
             res.json(newUser)
         } catch (err) {
             res.status(500).json(err);
         }
-    },
+    }),
 
-    async deleteUser (req, res) {
+    router.delete('/:id', async (req, res) => {
         try {
             const deleteUser = await User.findOneAndRemove({ _id: req.params.username});
 
@@ -60,9 +61,9 @@ module.exports = {
             console.log(err);
             res.status(500).json(err)
         }
-    },
+    }),
 
-    async updateUser (req, res) {
+    router.put ('/:id', async (req, res) => {
         try {
             const updateUser = await User.findOneAndUpdate({_id: req.params.username});
 
@@ -75,8 +76,8 @@ module.exports = {
             console.log(err);
             res.status(500).json(err)
         }
-    }
+    })
 
 //Need friend functionality (add/remove by friend ID)
 
-}
+module.exports =  router;

@@ -1,7 +1,9 @@
+const router = require('express').Router();
 const {Thought} = require('../../models')
 
-module.exports = {
-    async getThoughts (req, res) {
+// /api/thoughts
+
+    router.get('/', async (req, res) => {
         try {
             const thoughts = await Thought.find();
 
@@ -17,9 +19,9 @@ module.exports = {
             console.log(err)
             return res.status(500).json(err);
         }
-        },
+        }),
 
-    async getSingleThought(req, res) {
+    router.get('/:id', async (req, res) => {
         try {
             const thought = await Thought.findOne({ _id: req.params._id})
 
@@ -36,18 +38,18 @@ module.exports = {
             console.log(err);
             return res.status(500).json(err);
         }
-    },
+    }),
 
-    async createThought(req, res) {
+    router.put ('/:id', async (req, res) => {
         try {
             const newThought = await Thought.create(req.body);
             res.json(newThought)
         } catch (err) {
             res.status(500).json(err);
         }
-    },
+    }),
 
-    async deleteThought (req, res) {
+    router.delete('/:id', async (req, res) => {
         try {
             const deleteThought = await Thought.findOneAndRemove({ _id: req.params._id});
 
@@ -60,9 +62,9 @@ module.exports = {
             console.log(err);
             res.status(500).json(err)
         }
-    },
+    }),
 
-    async updateThought (req, res) {
+    router.put('/:id', async (req, res) => {
         try {
             const updateThought = await Thought.findOneAndUpdate({_id: req.params._id});
 
@@ -75,8 +77,8 @@ module.exports = {
             console.log(err);
             res.status(500).json(err)
         }
-    }
+    })
 
 //Need thought reaction functionality (add/remove by reaction ID)
 
-}
+module.exports = router;
