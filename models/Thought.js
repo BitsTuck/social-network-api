@@ -41,10 +41,20 @@ const thoughtSchema = new Schema ({
     }
 })
 
-const Thought = model('Thought', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
 const handleError = (err) => console.error(err);
 
-module.exports = Thought;
+Thought
+.create([
+    {thoughtText: 'you look great!', username: 'bitstuck'},
+    {thoughtText: 'I love this!!!!', username: 'suztuck'},
+    {thoughtText: 'You are the best!', username: 'samtuck'},
+    {thoughtText: 'Amazing', username: 'lilytuck'},
+    {thoughtText: 'wow I really hate it', username: 'robtuck'},
+    {thoughtText: 'congrats!!@#DFEWQ', username: 'archietuck'},
+])
+
+module.exports = Thought
 
 

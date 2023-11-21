@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const { Schema, model }= require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
@@ -14,11 +14,11 @@ const userSchema = new mongoose.Schema({
     }, 
     thoughts: {
         type: Schema.Types.ObjectId,
-        ref: ['Thought']
+        ref: 'thought'
     },
     friends: {
         type: Schema.Types.ObjectId,
-        ref: ['User']
+        ref: 'User'
 
     }
 
@@ -29,15 +29,20 @@ userSchema
     .get(function() {
         return this.friends;
     })
-    
-const User = mongoose.model('User', userSchema);
+
+const User = model('User', userSchema);
 
 const handleError = (err) => console.error(err);
 
 User
-.create({
-
-})
+.create([
+    {username: 'bitstuck', email: 'bits@me.com'},
+    {username: 'samtuck', email: 'sam@me.com',},
+    {username: 'suztuck', email: 'suz@me.com',},
+    {username: 'lilytuck', email: 'lily@me.com',},
+    {username: 'robtuck', email: 'robin@me.com',},
+    {username: 'archietuck', email: 'archie@me.com',}
+])
 
 .then(result => console.log('Created new User', result))
 .catch(err => handleError(err))
