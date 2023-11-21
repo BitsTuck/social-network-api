@@ -41,9 +41,11 @@ const thoughtSchema = new Schema ({
     }
 })
 
-const Thought = model('thought', thoughtSchema);
+
 
 const handleError = (err) => console.error(err);
+
+const Thought = model('thought', thoughtSchema);
 
 Thought
 .create([
@@ -54,6 +56,8 @@ Thought
     {thoughtText: 'wow I really hate it', username: 'robtuck'},
     {thoughtText: 'congrats!!@#DFEWQ', username: 'archietuck'},
 ])
+
+
 
 module.exports = Thought
 

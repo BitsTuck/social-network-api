@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
-const thoughtRoutes = require('../../controllers/thoughtControllers')
-const userRoutes = require('../../controllers/userControllers')
+const thoughtRoutes = require('./thoughtRoutes')
+const userRoutes = require('./userRoutes')
 
 router.use('/thoughts', thoughtRoutes)
 router.use('/users', userRoutes)

@@ -30,9 +30,11 @@ userSchema
         return this.friends;
     })
 
-const User = model('User', userSchema);
+
 
 const handleError = (err) => console.error(err);
+
+const User = model('user', userSchema);
 
 User
 .create([
@@ -46,5 +48,7 @@ User
 
 .then(result => console.log('Created new User', result))
 .catch(err => handleError(err))
+
+
 
 module.exports = User;
