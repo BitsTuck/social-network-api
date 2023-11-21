@@ -1,26 +1,19 @@
 const router = require('express').Router()
-const {User} = require('../../models')
+const {User} = require('../models')
 
-// /api/users
-   router.get('/', async (req, res) => {
+module.exports = {
+  async getUsers (req, res) {
         try {
-            const users = await User.find();
+            const users = await User.find()
 
-            const userObj = {
-                username, 
-                email, 
-                thoughts, 
-                friends
-            };
-
-            res.json(userObj);
+            res.json(users);
         } catch (err) {
             console.log(err)
             return res.status(500).json(err);
         }
-        }),
+        },
 
-    router.get('/:id', async (req, res) => {
+     async getUser (req, res) {
         try {
             const user = await User.findOne({ _id: req.params.username})
 
@@ -28,27 +21,23 @@ const {User} = require('../../models')
                 return res.status(404).json({ message: 'No user with that username' })
             }
 
-            res.json({
-                username, 
-                thoughts, 
-                friends
-            })
+            res.json(user)
         } catch (err) {
             console.log(err);
             return res.status(500).json(err);
         }
-    }),
+    },
 
-    router.post ('/', async (req, res) => {
+    async createUser (req, res) {
         try {
             const newUser = await User.create(req.body);
             res.json(newUser)
         } catch (err) {
             res.status(500).json(err);
         }
-    }),
+    },
 
-    router.delete('/:id', async (req, res) => {
+    async deleteUser (req, res) {
         try {
             const deleteUser = await User.findOneAndRemove({ _id: req.params.username});
 
@@ -61,9 +50,9 @@ const {User} = require('../../models')
             console.log(err);
             res.status(500).json(err)
         }
-    }),
+    },
 
-    router.put ('/:id', async (req, res) => {
+    async updateUser (req, res) {
         try {
             const updateUser = await User.findOneAndUpdate({_id: req.params.username});
 
@@ -76,8 +65,7 @@ const {User} = require('../../models')
             console.log(err);
             res.status(500).json(err)
         }
-    })
+    }
 
 //Need friend functionality (add/remove by friend ID)
-
-module.exports =  router;
+}

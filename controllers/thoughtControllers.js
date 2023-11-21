@@ -1,27 +1,20 @@
 const router = require('express').Router();
-const {Thought} = require('../../models')
+const {Thought} = require('../models')
 
-// /api/thoughts
+module.exports = {
 
-    router.get('/', async (req, res) => {
+   async getThoughts (req, res) {
         try {
             const thoughts = await Thought.find();
 
-            const thoughtObj = {
-                username, 
-                email, 
-                thoughts, 
-                friends
-            };
-
-            res.json(thoughtObj);
+            res.json(thoughts);
         } catch (err) {
             console.log(err)
             return res.status(500).json(err);
         }
-        }),
+        },
 
-    router.get('/:id', async (req, res) => {
+    async getThought (req, res) {
         try {
             const thought = await Thought.findOne({ _id: req.params._id})
 
@@ -29,27 +22,23 @@ const {Thought} = require('../../models')
                 return res.status(404).json({ message: 'There is no thought with this id' })
             }
 
-            res.json({
-                thoughtText, 
-                username, 
-                createdAt
-            })
+            res.json(thought)
         } catch (err) {
             console.log(err);
             return res.status(500).json(err);
         }
-    }),
+    },
 
-    router.put ('/:id', async (req, res) => {
+    async newThought (req, res) {
         try {
             const newThought = await Thought.create(req.body);
             res.json(newThought)
         } catch (err) {
             res.status(500).json(err);
         }
-    }),
+    },
 
-    router.delete('/:id', async (req, res) => {
+    async deleteThought (req, res) {
         try {
             const deleteThought = await Thought.findOneAndRemove({ _id: req.params._id});
 
@@ -58,13 +47,14 @@ const {Thought} = require('../../models')
             }
 
             res.json({ message: "Thought deleted" })
+
         } catch(err) {
             console.log(err);
             res.status(500).json(err)
         }
-    }),
+    },
 
-    router.put('/:id', async (req, res) => {
+    async updateThought (req, res) {
         try {
             const updateThought = await Thought.findOneAndUpdate({_id: req.params._id});
 
@@ -77,8 +67,8 @@ const {Thought} = require('../../models')
             console.log(err);
             res.status(500).json(err)
         }
-    })
+    }
 
 //Need thought reaction functionality (add/remove by reaction ID)
 
-module.exports = router;
+}
