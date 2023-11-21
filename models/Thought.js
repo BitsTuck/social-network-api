@@ -1,9 +1,9 @@
 const { Schema, model }= require('mongoose');
 
-const reactionSchema = new mongoose.Schema ({
+const reactionSchema = new Schema ({
     reactionId: {
-        type: ObjectId
-        //default value
+        type: Schema.Types.ObjectId,
+        default: 'generated'
     },
     reactionBody: {
         type: String,
@@ -20,7 +20,7 @@ const reactionSchema = new mongoose.Schema ({
 
 })
 
-const thoughtSchema = new mongoose.Schema ({
+const thoughtSchema = new Schema ({
     thoughtText: {
         type: String,
         // createdAt: date(get timestamp data),
@@ -29,7 +29,7 @@ const thoughtSchema = new mongoose.Schema ({
     }
 })
 
-const Thought = mongoose.model('Thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 
 const handleError = (err) => console.error(err);
 
