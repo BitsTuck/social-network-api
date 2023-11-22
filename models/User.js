@@ -9,30 +9,34 @@ const userSchema = new Schema({
     },
     email: {
         type: String, 
+        unique: true,
         required: true, 
         matchMedia: true,
     }, 
-    thoughts: {
+    thoughts: [
+        {
         type: Schema.Types.ObjectId,
         ref: 'thought'
     },
-    friends: {
+],
+    friends: [
+        {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'user',
+    },
+],
 
-    }
-
-})
+}
+);
 
 userSchema
     .virtual('friendCount')
     .get(function() {
-        return this.friends;
+        return this.friends.length;
     })
 
 
 
-const handleError = (err) => console.error(err);
 
 const User = model('user', userSchema);
 

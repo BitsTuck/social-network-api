@@ -17,6 +17,10 @@ const reactionSchema = new Schema ({
     createdAt: {
         type: Date,
         default: Date.now,
+        get: (date) => {
+            if(date) return date.toISOString()
+        }
+   
     }
 
 })
@@ -30,7 +34,10 @@ const thoughtSchema = new Schema ({
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        get: (date) => {
+            if(date) return date.toISOString()
+        }
     },
     username: {
         type: String,
@@ -39,7 +46,13 @@ const thoughtSchema = new Schema ({
     reactions: {
         ref: [reactionSchema]
     }
-})
+});
+
+thoughtSchema
+    .virtual('reactionCount')
+    .get(function() {
+        return this.reactions.length;
+    })
 
 
 
