@@ -40,6 +40,7 @@ userSchema
 
 const User = model('user', userSchema);
 
+
 // User
 // .create([
 //     {username: 'bitstuck', email: 'bits@me.com'},

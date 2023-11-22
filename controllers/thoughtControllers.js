@@ -33,17 +33,18 @@ module.exports = {
             const newThought = await Thought.create(req.body);
             const user = await User.findOneAndUpdate(
                 {_id: req.body._id},
-                {$addToSet: {thoughts: thought.thoughtText}},
+                {$addToSet: {thoughts: newThought._id}},
                 {new: true}
             )
 
             if(!user) {
                 return res.status(404).json({
-                    message: 'Your thought was created. No such user with this id.'
+                    message: 'Your thought was not created. No such user with this id.'
                 })
             }
             res.json(newThought)
         } catch (err) {
+            console.log(err)
             res.status(500).json(err);
         }
     },
