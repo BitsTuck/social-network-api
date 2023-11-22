@@ -1,29 +1,6 @@
 const { Schema, model }= require('mongoose');
+const Reactions = require('./Reactions')
 
-const reactionSchema = new Schema ({
-    reactionId: {
-        type: Schema.Types.ObjectId,
-        default: 'generated'
-    },
-    reactionBody: {
-        type: String,
-        required: true, 
-        maxlength: 280,
-    },
-    username: {
-        type: String, 
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        get: (date) => {
-            if(date) return date.toISOString()
-        }
-   
-    }
-
-})
 
 const thoughtSchema = new Schema ({
     thoughtText: {
@@ -44,7 +21,7 @@ const thoughtSchema = new Schema ({
         required: true
     },
     reactions: {
-        ref: [reactionSchema]
+        ref: [Reactions]
     }
 });
 
@@ -56,7 +33,6 @@ thoughtSchema
 
 
 
-const handleError = (err) => console.error(err);
 
 const Thought = model('thought', thoughtSchema);
 
