@@ -84,14 +84,12 @@ module.exports = {
         }
     },
 
-//CHECK ALL REACTIONS
 
 async addReaction(req, res) {
     try {
         const thoughts = await Thought.findOneAndUpdate(
-            {_id: req.params.thoughtId},
+            {_id: req.params._id},
             {$addToSet: {reactions: req.body }},
-            {runValidators: true, new: true}
         );
 
         if(!thoughts) {
@@ -100,6 +98,7 @@ async addReaction(req, res) {
 
         res.json(thoughts)
     } catch (err) {
+        console.log(err)
         res.status(500).json(err)
     }
 },
@@ -107,7 +106,7 @@ async addReaction(req, res) {
 async deleteReaction(req, res) {
     try {
         const thoughts = await Thought.findOneAndDelete(
-            {_id: req.params.thoughtId},
+            {_id: req.params._id},
             {$pull: { reactions: {reactionsId: req.params.reactionsId}}},
             {runValidators: true, new: true}
         );

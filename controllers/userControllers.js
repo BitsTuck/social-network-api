@@ -69,7 +69,6 @@ module.exports = {
         }
     },
 
-    //Need friend functionality (add/remove by friend ID)
 
     async addFriend(req, res) {
         try {
@@ -99,7 +98,7 @@ module.exports = {
 
     async deleteFriend(req, res) {
         try {
-            const user = await Users.findOneAndDelete(
+            const user = await User.findOneAndDelete(
                 { _id: req.params._id },
                 { $pull: { friends: { friendsId: req.params.friendsId } } },
                 { runValidators: true, new: true }
@@ -111,6 +110,7 @@ module.exports = {
 
             res.json(user)
         } catch (err) {
+            console.log(err)
             res.status(500).json(err)
         }
     },

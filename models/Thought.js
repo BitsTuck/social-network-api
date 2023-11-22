@@ -20,9 +20,9 @@ const thoughtSchema = new Schema ({
         type: String,
         required: true
     },
-    reactions: {
+    reactions: [{
         ref: [reactions]
-    }
+    }]
 });
 
 thoughtSchema
