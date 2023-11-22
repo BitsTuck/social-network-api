@@ -38,7 +38,7 @@ module.exports = {
 
     async deleteUser (req, res) {
         try {
-            const deleteUser = await User.findOneAndRemove({ _id: req.params._id});
+            const deleteUser = await User.findOneAndDelete({ _id: req.params._id});
 
             if(!deleteUser) {
                 return res.status(404).json({ message: "No such username. Cannot delete." })
@@ -53,7 +53,10 @@ module.exports = {
 
     async updateUser (req, res) {
         try {
-            const updateUser = await User.findOneAndUpdate({_id: req.params._id});
+            const updateUser = await User.findOneAndUpdate({ _id: req.params._id},
+                {$set: req.body},
+                {runValidators: true, new: true}
+                );
 
             if(! updateUser) {
                 return res.status(404).json({ message: "No such user. No update made."})
@@ -71,7 +74,7 @@ module.exports = {
 async addFriend(req, res) {
     try {
         const user = await Users.findOneAndUpdate(
-            {_id: req.params.userId},
+            {_id: req.params._id},
             {$addToSet: {friends: req.body }},
             {runValidators: true, new: true}
         );
@@ -89,7 +92,7 @@ async addFriend(req, res) {
 async deleteFriend(req, res) {
     try {
         const user = await Users.findOneAndDelete(
-            {_id: req.params.userId},
+            {_id: req.params._id},
             {$pull: { friends: {friendsId: req.params.friendsId}}},
             {runValidators: true, new: true}
         );

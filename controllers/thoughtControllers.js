@@ -33,7 +33,7 @@ module.exports = {
             const newThought = await Thought.create(req.body);
             const user = await User.findOneAndUpdate(
                 {_id: req.body._id},
-                {$addToSet: {thoughts: thought._id}},
+                {$addToSet: {thoughts: thought.thoughtText}},
                 {new: true}
             )
 
@@ -50,7 +50,7 @@ module.exports = {
 
     async deleteThought (req, res) {
         try {
-            const deleteThought = await Thought.findOneAndRemove({ _id: req.params._id});
+            const deleteThought = await Thought.findOneAndDelete({ _id: req.params._id});
 
             if(!deleteThought) {
                 return res.status(404).json({ message: "No such thought with this id. Cannot delete." })
